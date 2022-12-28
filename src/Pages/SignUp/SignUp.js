@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -7,13 +8,14 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, } = useForm();
-const { createUser, updateUser } = useContext(AuthContext)
+const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
   const [signupError, setSignUpError] = useState("");
   const location = useLocation()
   const navigate = useNavigate()
 
   const from = location.state?.from?.pathname || '/';
 
+  // sign up
   const handleSignUp = (data) => {
     setSignUpError("");
     createUser(data.email, data.password)
@@ -37,9 +39,20 @@ const { createUser, updateUser } = useContext(AuthContext)
     })
   };
 
+  // google sign up and login
+  const provider = new GoogleAuthProvider()
   const googleLoginHandler = (data) => {
     setSignUpError("");
-     console.log(data)
+    googleLoginProvider(provider)
+    .then( result => {
+      const user = result.user;
+      console.log(user)
+      navigate(from, { replace: true });
+    })
+    .catch(error => {
+      console.error(error.message)
+      setSignUpError(error.message)
+  })
   };
   return (
     <div className="h-[800px]  flex justify-center items-center">
