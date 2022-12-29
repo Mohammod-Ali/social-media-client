@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const FirstSection = () => {
   const {
@@ -8,8 +10,49 @@ const FirstSection = () => {
     handleSubmit,
   } = useForm();
 
+  const navigate =  useNavigate()
+
+  const imgHostKey = process.env.REACT_APP_imgbb_key
+
+  // post data handle function
   const handlePostData = (data) => {
-    console.log(data);
+    const image = data.img[0]
+    const formData = new FormData();
+    formData.append('image', image)
+    const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+    fetch(url, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.json())
+    .then(imgData => {
+      if(imgData.success){
+        console.log(imgData.data.url)
+
+        const post = {
+          text: data.text,
+          img: imgData.data.url,
+          like: 0
+        }
+
+        // save the post data to db
+        fetch('http://localhost:5000/post', {
+          method: "POST",
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(post)
+        })
+        .then(res => res.json())
+        .then(data => {
+          if(data.acknowledged){
+            console.log(data)
+            toast.success('Posted Successfully')
+            navigate('/media')
+        }
+        })
+      }
+    })
   };
 
   return (
@@ -36,32 +79,25 @@ const FirstSection = () => {
                 </label>
                 <input
                   type="text"
-                  {...register("text", { required: "Text field is required" })}
+                  {...register("text", { required: "Text is required" })}
                   className="textarea textarea-primary" placeholder="Type Your Text"
                 />
                 {errors.text && (
                   <p className="text-red-600">{errors.text?.message}</p>
                 )}
               </div>
-              <div className="form-control w-full">
+              <div className="form-control w-full max-w-md">
                 <label className="label">
-                  <span className="label-text">Upload Your Image</span>
+                  <span className="label-text">Select Your Photo</span>
                 </label>
                 <input
                   type="file"
-                  {...register("password", {
-                    required: "password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password must be 6 characters.",
-                    },
-                  })}
-                  className="input input-bordered w-full "
+                  {...register("img", { required: "Photo is required" })}
+                  className="file-input file-input-bordered file-input-primary " 
                 />
-                {errors.password && (
-                  <p className="text-red-600">{errors.password?.message}</p>
+                {errors.img && (
+                  <p className="text-red-600">{errors.img?.message}</p>
                 )}
-                
               </div>
 
               <input

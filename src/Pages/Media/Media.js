@@ -11,17 +11,16 @@ const Media = () => {
   //     .then((data) => setPosts(data));
   // }, []);
 
+ 
+
 // react/tanStack query
   const {data:posts = [], } = useQuery({
     queryKey: ['post'],
-    queryFn: () => fetch("http://localhost:5000/post")
+    queryFn: () => fetch("http://localhost:5000/posts")
     .then((res) => res.json())
   })
 
-  // like btn handler
-  const likeHandler = () => {
-    console.log("like");
-  };
+
 
   return (
     <div className="mt-10">
@@ -31,7 +30,6 @@ const Media = () => {
           <PostCard
             key={post._id}
             post={post}
-            likeHandler={likeHandler}
           ></PostCard>
         ))}
       </div>
