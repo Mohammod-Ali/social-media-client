@@ -112,7 +112,7 @@ const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
             value="Sign Up"
             type="submit"
           />
-          {/* login error */}
+          {/* signup error */}
           {signupError && <p className="text-red-600">{signupError}</p>}
         </form>
         <p className="mt-3">
