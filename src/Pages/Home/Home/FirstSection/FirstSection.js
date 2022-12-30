@@ -99,16 +99,14 @@ const FirstSection = () => {
                   <p className="text-red-600">{errors.img?.message}</p>
                 )}
               </div>
-
+              
+              
               <input
                 className="btn btn-outline w-full mt-8"
                 value="submit"
                 type="submit"
               />
-              {/* Post data error */}
-              {
-                //   loginError && <p className='text-red-600'>{loginError}</p>
-              }
+          
             </form>
           </div>
         </div>

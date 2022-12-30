@@ -5,6 +5,7 @@ import Home from "../../Pages/Home/Home/Home"
 import Login from "../../Pages/Login/Login"
 import Media from "../../Pages/Media/Media"
 import Message from "../../Pages/Message/Message"
+import PostDetails from "../../Pages/PostDetails/PostDetails"
 import SignUp from "../../Pages/SignUp/SignUp"
 
 export const router = createBrowserRouter([
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/media',
-                element: <Media></Media>
+                element: <Media></Media> 
             },
             {
                 path: '/message',
@@ -35,6 +36,11 @@ export const router = createBrowserRouter([
             {
                 path: '/about',
                 element: <About></About>
+            },
+            {
+                path: '/postdetails/:id',
+                element: <PostDetails></PostDetails>,
+                loader: ({params}) => fetch(`http://localhost:5000/postdetails/${params.id}`)
             }
         ]
     }

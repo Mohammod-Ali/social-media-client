@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+import { Link } from "react-router-dom";
 
 const PostCard = ({ post }) => {
-  const { text, img, like,  } = post;
+  const { text, img, like, _id } = post;
   const [likes, setLikes] = useState(like)
   const [ likeActive, setLikeActive ] = useState(false)
 
@@ -16,6 +17,7 @@ const PostCard = ({ post }) => {
         setLikeActive(true)
         setLikes(likes+1)
       }
+
     };
 
   return (
@@ -24,17 +26,17 @@ const PostCard = ({ post }) => {
         <img src={img} alt="card" />
       </figure>
       <div className="card-body">
-        {/* <h2 className="card-title">Shoes!</h2> */}
+        
         <p><span className="font-bold">Caption:</span> {text}</p>
         <div className="card-actions justify-between">
           <div className="text-3xl cursor-pointer mt-3">
-            {/* <BiLike className={[likeActive ? 'bg-slate-500 rounded-sm' : null]} onClick={ () => likeHandler()}></BiLike> */}
             {
               likeActive ? <FcLike onClick={likeHandler}></FcLike> : <FcLikePlaceholder onClick={likeHandler}></FcLikePlaceholder>
             }
           </div>
           <p className="font-bold mt-3"> {likes}</p>
-          <button className="btn btn-outline">Details</button>
+          <Link to={`/postdetails/${_id}`}><button className="btn btn-outline">Details</button></Link>
+          
         </div>
       </div>
     </div>

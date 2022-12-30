@@ -1,21 +1,40 @@
-import React from 'react';
-import { BiLike } from 'react-icons/bi';
+import React, { useState } from 'react';
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
+import { Link } from 'react-router-dom';
 
 const TopPostCard = ({post}) => {
-    const {img, text, like } = post;
+    const {img, text, like, _id } = post;
+    const [likes, setLikes] = useState(like)
+  const [ likeActive, setLikeActive ] = useState(false)
+
+  // like btn handler
+  const likeHandler = () => {
+    if(likeActive){
+      setLikeActive(false)
+      setLikes(likes-1)
+    }else{
+      setLikeActive(true)
+      setLikes(likes+1)
+    }
+
+    
+  };
+
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
       <figure>
         <img src={img} alt="card" />
       </figure>
       <div className="card-body">
-        {/* <h2 className="card-title">Shoes!</h2> */}
         <p><span className="font-bold">Caption:</span> {text}</p>
         <div className="card-actions justify-between">
           <div className="text-3xl cursor-pointer mt-3">
-            <BiLike onClick={'likeHandler'}></BiLike>  {like}
+          {
+              likeActive ? <FcLike onClick={likeHandler}></FcLike> : <FcLikePlaceholder onClick={likeHandler}></FcLikePlaceholder>
+            }
           </div>
-          <button className="btn btn-outline">Details</button>
+          <p className="font-bold mt-3"> {likes}</p>
+          <Link to={`/postdetails/${_id}`}><button className="btn btn-outline">Details</button></Link>
         </div>
       </div>
     </div>

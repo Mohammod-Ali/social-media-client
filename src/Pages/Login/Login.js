@@ -78,20 +78,18 @@ const Login = () => {
             className="input input-bordered w-full max-w-xs"
           />
            {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
-          <label className="label">
-            <span className="label-text">Forgat Password</span>
-          </label>
+          
         </div>
       
       {/* <p>{data}</p> */}
-      <input className="btn btn-outline w-full" value='Login' type="submit" />
+      <input className="btn btn-outline w-full mt-8" value='Login' type="submit" />
       {/* login error */}
       {
         loginError && <p className='text-red-600'>{loginError}</p>
       }
 
     </form>
-      <p className='mt-3'>New to MediaBook. Please <Link className="text-primary" to='/signup'>Sign Up</Link></p>
+      <p className='mt-3'>New to MediaBook. Please <Link className="text-primary" to='/signup'>Register</Link></p>
       <div className="divider">OR</div>
         <button onClick={googleLoginHandler} className="btn btn-outline w-full"><FaGoogle className='m-2 text-2xl'></FaGoogle> Continue with Google</button>
       </div>

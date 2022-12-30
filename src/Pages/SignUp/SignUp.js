@@ -10,10 +10,10 @@ const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, } = useForm();
 const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
   const [signupError, setSignUpError] = useState("");
-  const location = useLocation()
+  // const location = useLocation()
   const navigate = useNavigate()
 
-  const from = location.state?.from?.pathname || '/';
+  // const from = location.state?.from?.pathname || '/';
 
   // sign up
   const handleSignUp = (data) => {
@@ -22,14 +22,14 @@ const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
     .then(result => {
         const user = result.user;
         console.log(user)
-        toast.success('Successfully toasted!')
 
         const userInfo = {
-            displayName: data.name
+          displayName: data.name
         }
         updateUser(userInfo)
         .then(() => {
-            navigate(from, { replace: true });
+          toast.success('Registration Successfully')
+            navigate('/');
         })
         .catch(err => console.log(err))
     })
@@ -40,24 +40,25 @@ const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
   };
 
   // google sign up and login
-  const provider = new GoogleAuthProvider()
-  const googleLoginHandler = (data) => {
-    setSignUpError("");
-    googleLoginProvider(provider)
-    .then( result => {
-      const user = result.user;
-      console.log(user)
-      navigate(from, { replace: true });
-    })
-    .catch(error => {
-      console.error(error.message)
-      setSignUpError(error.message)
-  })
-  };
+  // const provider = new GoogleAuthProvider()
+  // const googleLoginHandler = (data) => {
+  //   setSignUpError("");
+  //   googleLoginProvider(provider)
+  //   .then( result => {
+  //     const user = result.user;
+  //     console.log(user)
+  //     navigate(from, { replace: true });
+  //   })
+  //   .catch(error => {
+  //     console.error(error.message)
+  //     setSignUpError(error.message)
+  // })
+  // };
+
   return (
     <div className="h-[800px]  flex justify-center items-center">
       <div className="w-96 p-7">
-        <h1 className="text-3xl text-center font-bold"> Sign Up</h1>
+        <h1 className="text-3xl text-center font-bold"> Register</h1>
 
         <form onSubmit={handleSubmit(handleSignUp)}>
           <div className="form-control w-full max-w-xs">
@@ -109,7 +110,7 @@ const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
           {/* <p>{data}</p> */}
           <input
             className="btn btn-outline w-full mt-8"
-            value="Sign Up"
+            value="register"
             type="submit"
           />
           {/* signup error */}
@@ -121,10 +122,10 @@ const { createUser, updateUser, googleLoginProvider } = useContext(AuthContext)
             Login
           </Link>
         </p>
-        <div className="divider">OR</div>
+        {/* <div className="divider">OR</div>
         <button onClick={googleLoginHandler} className="btn btn-outline w-full">
           <FaGoogle className="m-2 text-2xl"></FaGoogle> Continue with Google
-        </button>
+        </button> */}
       </div>
     </div>
   );

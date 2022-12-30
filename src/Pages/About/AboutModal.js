@@ -108,7 +108,7 @@ const AboutModal = ({refetch}) => {
           <div className="modal-action">
           <input 
             className="btn"
-            value="submit"
+            value="save"
             type="submit"
           />
             <label htmlFor="about-modal" className="btn">

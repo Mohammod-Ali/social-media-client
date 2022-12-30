@@ -1,17 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostCard from "./PostCard";
 
 const Media = () => {
-  // const [posts, setPosts] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/post")
-  //     .then((res) => res.json())
-  //     .then((data) => setPosts(data));
-  // }, []);
-
- 
 
 // react/tanStack query
   const {data:posts = [], } = useQuery({
@@ -19,8 +10,6 @@ const Media = () => {
     queryFn: () => fetch("http://localhost:5000/posts")
     .then((res) => res.json())
   })
-
-
 
   return (
     <div className="mt-10">
