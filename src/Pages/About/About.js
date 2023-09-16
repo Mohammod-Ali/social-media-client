@@ -4,34 +4,32 @@ import AboutCard from "./AboutCard";
 import AboutModal from "./AboutModal";
 
 const About = () => {
-
-    const {data: about = [], refetch } = useQuery({
-        queryKey: ['aboutData'],
-        queryFn: () => fetch("http://localhost:5000/aboutdata")
-        .then((res) => res.json())
-      })
+  const { data: about = [], refetch } = useQuery({
+    queryKey: ["aboutData"],
+    queryFn: () =>
+      fetch("https://social-media-server-pi-opal.vercel.app/aboutdata").then(
+        (res) => res.json()
+      ),
+  });
 
   return (
     <div>
       <div className="flex justify-around mt-8">
-      <h1 className="text-5xl font-semibold mt-5">About:</h1>
-      {/* The button to open modal */}
+        <h1 className="text-5xl font-semibold mt-5">About:</h1>
+        {/* The button to open modal */}
+        <div>
+          <label htmlFor="about-modal" className="btn">
+            Edit
+          </label>
+        </div>
+      </div>
+
       <div>
-      <label htmlFor="about-modal" className="btn">
-        Edit 
-      </label>
+        {about.map((data) => (
+          <AboutCard key={data._id} data={data}></AboutCard>
+        ))}
       </div>
-      </div>
-      
-      <div>
-      {
-        about.map(data => <AboutCard
-        key={data._id}
-        data={data}
-        ></AboutCard>)
-      }
-      </div>
-      
+
       <AboutModal refetch={refetch}></AboutModal>
     </div>
   );
